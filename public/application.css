@@ -1,0 +1,20 @@
+.nav-bar {
+	width: 100%;
+	background-color: none;
+	height: 50px;
+	margin: 0 auto;
+
+}
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.header-bar {
+	width:100%;
+	background-color: lightblue;
+	height: 255px;
+	margin: 0 auto;
+}
