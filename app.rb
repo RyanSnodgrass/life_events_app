@@ -2,11 +2,11 @@ require 'sinatra'
 require "sinatra/activerecord"
 
 #RACK_ENV=production rackup config.ru
-set :database, "sqlite3:///to_do_class_app.db"
+set :database, "sqlite3:///life_event_app.db"
 
-get "/favorite_movies" do
-	@favs = FavoriteMovie.all
-	erb :"fav_mov/index"
+get "/life_events" do
+	@events = LifeTable.all
+	erb :"life_event/index"
 end
 
 get "/error" do
@@ -14,38 +14,48 @@ get "/error" do
 end
 
 get "/addition" do
-
-	erb :"fav_mov/addition_index"
+	erb :"life_event/new"
 end
 
-# put "/edit/:id" do
-# 	@favs = FavoriteMovie.find(params[:id])
-# end
-
-
-	get "/edit/:id" do
-		@movie_to_remove = FavoriteMovie.find(params[:id])
-		erb :"fav_mov/show"
-	end
-
- delete "/edit/:id" do
- 	@movie_to_remove = FavoriteMovie.find(params[:id])
- 	@movie_to_remove.delete
- 	redirect "./favorite_movies"
- end
+get "/edit/:id" do
+	@event_to_update = LifeTable.find(params[:id])
+	@event_to_remove = LifeTable.find(params[:id])
+	erb :"life_event/edit"
+end
 
 get "/remove" do
-	@favs = FavoriteMovie.all
-	erb :"fav_mov/remove_index"
+	@events = LifeTable.all
+	erb :"life_event/remove_index"
+end
+
+put "/life_events/:id" do
+	@event_to_update = LifeTable.find(params[:id])
+	@event_to_update.title = params[:event_name]
+	@event_to_update.description = params[:event_desc]
+	@event_to_update.save
+	redirect "./life_events"
+end
+
+	
+delete "/edit/:id" do
+	@event_to_remove = LifeTable.find(params[:id])
+	@event_to_remove.delete
+	redirect "./life_events"
+end
+
+post "/search" do
+	@query = params[:new_search]
+	@results = LifeTable.where(title: @query)
+	erb :"life_event/results"
 end
 
 post "/add_post" do
 	event = LifeTable.new
-	event.title = params[:mov_name]
-	event.description = params[:mov_desc]
+	event.title = params[:event_name]
+	event.description = params[:event_desc]
 	event.save
-	redirect "./favorite_movies"
+	redirect "./life_events"
 end
 
 class LifeTable <ActiveRecord::Base
-	end
+end
