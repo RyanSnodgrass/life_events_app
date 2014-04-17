@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140416170238) do
+ActiveRecord::Schema.define(version: 20140416230855) do
 
   create_table "favorite_movies", force: true do |t|
     t.string   "title"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 20140416170238) do
     t.string   "title"
     t.string   "description"
     t.datetime "date"
+  end
+
+  create_table "school_tables", force: true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.string   "major"
+    t.datetime "graduation"
   end
 
 end
